@@ -22,6 +22,7 @@ class Connect extends \shell\WorkerBase
             \ModelCli_log::getInstance()->data($data)->add();
         } else {
             // notify admin to kill this user
+            \shell\ServerBase::output('not user found');
         }
 
     }

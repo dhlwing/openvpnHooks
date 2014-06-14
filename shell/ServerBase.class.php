@@ -52,7 +52,7 @@ usage
             $worker = $this->worker;
             $worker = new $worker();
             $worker->run();
-            unlink($lockFile);
+            //unlink($lockFile);
         }
 
     }
