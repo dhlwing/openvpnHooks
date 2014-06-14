@@ -1,7 +1,7 @@
 <?php
 namespace shell;
 
-use \vendor\database\DB as DB;
+use \vendor\database\Db as Db;
 
 class Model {
     // 操作状态
