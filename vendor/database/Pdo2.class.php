@@ -2,7 +2,7 @@
 
 namespace vendor\database;
 
-use \PDO;
+use \PDO as PDO;
 
 class Pdo2 extends Db{
 
