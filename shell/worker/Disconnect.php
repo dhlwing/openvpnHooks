@@ -7,9 +7,10 @@ class Disconnect extends \shell\WorkerBase
     public function run()
     {
 
-        print_r($GLOBALS);
         print_r($_SERVER);
         $user = \ModelCli_user::getInstance()->field('uid, quota_cycle, quota_bytes')->where('username="'.$_SERVER['common_name'].'"')->find();
+
+        echo \ModelCli_user::getInstance()->getLastSql();
 
         if ($user) {
             $data = array(
