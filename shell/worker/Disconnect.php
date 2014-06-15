@@ -41,6 +41,8 @@ class Disconnect extends \shell\WorkerBase
             }
 
             \ModelCli_user::getInstance()->save($dataUser, array('uid'=>$user['uid']));
+        } else {
+            \shell\ServerBase::output('not user found');
         }
 
 
