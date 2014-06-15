@@ -29,19 +29,21 @@ class Disconnect extends \shell\WorkerBase
             \ModelCli_log::getInstance()->data($data)->save('',$where);
 
             $quote_bytes = $user['quote_bytes'] + $_SERVER['bytes_sent'] + $_SERVER['bytes_received'];
-            $quote_cycle = $user['quote_cycle'] + $_SERVER['bytes_sent'] + $_SERVER['bytes_received'];
+            $quote_cycle = $user['quote_cycle'] - ($_SERVER['bytes_sent'] + $_SERVER['bytes_received']);
 
             $dataUser = array(
                     'quote_bytes' => $quote_bytes,
-                    'quote_cycle' => $quote_bytes
+                    'quote_cycle' => $quote_cycle
                 );
             // 判断是否超过流量 超过则下线禁止vpn继续链接
             
-            if ($quote_cycle > 30 * 1024 * 1204 * 1024) {
+            if ($quote_cycle <= 0) {
                 $dataUser['active'] = 0;
             }
 
             \ModelCli_user::getInstance()->save($dataUser, array('uid'=>$user['uid']));
+            $sql = \ModelCli_user::getInstance()->getLastSql();
+            \shell\ServerBase::output($sql);
         } else {
             \shell\ServerBase::output('not user found');
         }
