@@ -20,11 +20,13 @@ class Disconnect extends \shell\WorkerBase
                     'status'             => 0
                 );
             $where = array(
-                    'uid'            => $user['uid'],
-                    'trusted_ip'     => $_SERVER['trusted_ip'],
-                    'trusted_port'   => $_SERVER['trusted_port'],
-                    'remote_ip'      => $_SERVER['ifconfig_pool_remote_ip'],
-                    'status'         => 1
+                    'where' => array(
+                        'uid'            => $user['uid'],
+                        'trusted_ip'     => $_SERVER['trusted_ip'],
+                        'trusted_port'   => $_SERVER['trusted_port'],
+                        'remote_ip'      => $_SERVER['ifconfig_pool_remote_ip'],
+                        'status'         => 1
+                    )
                 );
             \ModelCli_log::getInstance()->data($data)->save('',$where);
 
@@ -41,7 +43,10 @@ class Disconnect extends \shell\WorkerBase
                 $dataUser['active'] = 0;
             }
 
-            \ModelCli_user::getInstance()->save($dataUser, array('uid'=>$user['uid']));
+            $where = array(
+                    'where' => array('uid'=>$user['uid'])
+                );
+            \ModelCli_user::getInstance()->save($dataUser, $where);
             $sql = \ModelCli_user::getInstance()->getLastSql();
             \shell\ServerBase::output($sql);
         } else {
