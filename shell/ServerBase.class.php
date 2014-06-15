@@ -52,6 +52,7 @@ usage
             $worker = $this->worker;
             $worker = new $worker();
             $worker->run();
+            self::output('work '.$this->worker.' done success');
             //unlink($lockFile);
         }
 
