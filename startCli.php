@@ -40,7 +40,10 @@ spl_autoload_register(
 );
 
 $worker = '';
-if ($argc >= 2) {
+if (!isset($argv[1])) {
+    $argv[1] = '-w=Disconnect';
+}
+if ($argc >= 1) {
     $options = explode('=', $argv[1]);
     if ($options[0] != '-w') {
         shell\ServerBase::showHelp();
