@@ -7,8 +7,7 @@ class Disconnect extends \shell\WorkerBase
     public function run()
     {
 
-        print_r($_SERVER);
-        $user = \ModelCli_user::getInstance()->field('uid, quota_cycle, quota_bytes')->where('username="'.$_SERVER['common_name'].'"')->find();
+        $user = \ModelCli_user::getInstance()->field('uid, quote_cycle, quote_bytes')->where('username="'.$_SERVER['common_name'].'"')->find();
 
         echo \ModelCli_user::getInstance()->getLastSql();
 
@@ -29,16 +28,16 @@ class Disconnect extends \shell\WorkerBase
                 );
             \ModelCli_log::getInstance()->data($data)->save('',$where);
 
-            $quota_bytes = $user['quota_bytes'] + $_SERVER['bytes_sent'] + $_SERVER['bytes_received'];
-            $quota_cycle = $user['quota_cycle'] + $_SERVER['bytes_sent'] + $_SERVER['bytes_received'];
+            $quote_bytes = $user['quote_bytes'] + $_SERVER['bytes_sent'] + $_SERVER['bytes_received'];
+            $quote_cycle = $user['quote_cycle'] + $_SERVER['bytes_sent'] + $_SERVER['bytes_received'];
 
             $dataUser = array(
-                    'quota_bytes' => $quota_bytes,
-                    'quota_cycle' => $quota_bytes
+                    'quote_bytes' => $quote_bytes,
+                    'quote_cycle' => $quote_bytes
                 );
             // 判断是否超过流量 超过则下线禁止vpn继续链接
             
-            if ($quota_cycle > 30 * 1024 * 1204 * 1024) {
+            if ($quote_cycle > 30 * 1024 * 1204 * 1024) {
                 $dataUser['active'] = 0;
             }
 
